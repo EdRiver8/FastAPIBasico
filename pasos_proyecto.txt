@@ -1,0 +1,9 @@
+1- crear entorno virtual python: py -m venv venv
+2- activar el entorno: .\venv\scripts\activate
+3- en el entorno instalar lo que se necesita como: pip install fastapi uvicorn
+4- iniciar la api con uvicorn: uvicorn main:app --reload
+5- ingresar al localhost: http://127.0.0.1:8000 
+6- ver la documentacion de swagger: http://127.0.0.1:8000/docs o la de redoc http://127.0.0.1:8000/redoc
+7- crear archivo .gitignore y en este excluir la carpeta 'venv', ya que no debe ser subida a github porque 
+  va a tener muchos archivos que no se necesitan, para ello se crea un archivo llamado 'requirement'
+  que es todo lo que necesita el proyecto
