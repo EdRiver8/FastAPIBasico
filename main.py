@@ -73,11 +73,13 @@ def show_person(
     alias="name-query", 
     min_length=1, 
     max_length=50,
-    description="This is the person name. Its between 1 and 50 characters"
+    description="This is the person name. Its between 1 and 50 characters",
+    example="Kate"
     ),
   age: str = Query(
     ..., 
-    title="Person Age"
+    title="Person Age",
+    example="22"
     )
 ): 
   return {name: age}
@@ -89,7 +91,8 @@ def show_person(
 def show_person(
   person_id: int = Path(
     ..., 
-    gt=0
+    gt=0,
+    example="123"
     )
 ):
   return {person_id: "It exists!"}
@@ -103,7 +106,8 @@ def update_person(
     ...,
     title="Person ID",
     description="This is the person ID",
-    gt=0
+    gt=0,
+    example="123"
     ),
   person: Person = Body(...),
   location: Location = Body(...)
