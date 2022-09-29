@@ -15,6 +15,12 @@ class Person(BaseModel):
   age: int
   hair_color: str | None = Field(default=None, example="Blonde, Dark")
   is_married: bool | None = None
+  
+class Location(BaseModel):
+  city: str
+  state: str
+  country: str
+  
 
 @app.get("/") # path operation decoration
 def home():
@@ -56,4 +62,21 @@ def show_person(
     )
 ):
   return {person_id: "It exists!"}
-  
+
+
+#Validaciones: Request Body
+
+@app.put("/person/{person_id}")
+def update_person(
+  person_id: int = Path(
+    ...,
+    title="Person ID",
+    description="This is the person ID",
+    gt=0
+    ),
+  person: Person = Body(...),
+  location: Location = Body(...)
+):
+  results = person.dict() # uniendo los dos bodys de dif models
+  results.update(location)
+  return person;
