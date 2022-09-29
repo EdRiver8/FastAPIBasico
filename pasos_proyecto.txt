@@ -1,3 +1,4 @@
+Aplicacion para manejar twits (mensajes) y usuarios
 1- crear entorno virtual python: py -m venv venv
 2- activar el entorno: .\venv\scripts\activate
 3- en el entorno instalar lo que se necesita como: pip install fastapi uvicorn
@@ -7,3 +8,6 @@
 7- crear archivo .gitignore y en este excluir la carpeta 'venv', ya que no debe ser subida a github porque 
   va a tener muchos archivos que no se necesitan, para ello se crea un archivo llamado 'requirement'
   que es todo lo que necesita el proyecto
+9- crear el repositorio en git y vincularlo al proyecto
+10- crear modelos segun el mapeo de entidades que se hace al ejercicio => diagrama entidad-relacion
+  se usa pydantic para ello
