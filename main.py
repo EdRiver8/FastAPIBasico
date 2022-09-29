@@ -1,5 +1,5 @@
 # pertenece a python como tal
-from typing_extensions import Required
+from enum import Enum
 
 # antes que fastapi, porque este trabaja con pydantic (gerarquia)
 from pydantic import BaseModel, Field
@@ -9,17 +9,48 @@ from fastapi import FastAPI, Body, Query, Path
 app = FastAPI()
 
 # Models
+
+class HairColor(Enum):
+  white = "White"
+  brown = "Brown"
+  black = "Black"
+  red = "Red"
+  blonde = "Blonde"
+
 class Person(BaseModel):
-  first_name: str
-  last_name: str
-  age: int
-  hair_color: str | None = Field(default=None, example="Blonde, Dark")
-  is_married: bool | None = None
+  first_name: str = Field(
+    ..., 
+    min_length=1, 
+    max_length=50
+    )
+  last_name: str = Field(
+    ..., 
+    min_length=1, 
+    max_length=50
+    )
+  age: int = Field(
+    ...,
+    le=115,
+    gt=0    
+  )
+  hair_color: HairColor | None = Field(default=None)
+  is_married: bool | None = Field(default=None)
+  
+  class Config:
+    schema_extra = {
+      "example":{
+        "first_name":"Edw",
+        "last_name":"River",
+        "age":"36",
+        "hair_color":"Blonde",
+        "is_married": False
+      }
+    }
   
 class Location(BaseModel):
-  city: str
-  state: str
-  country: str
+  city: str = Field(example="Med")
+  state: str = Field(example="Antoquia")
+  country: str = Field(example="Colombia")
   
 
 @app.get("/") # path operation decoration
@@ -80,3 +111,16 @@ def update_person(
   results = person.dict() # uniendo los dos bodys de dif models
   results.update(location)
   return person;
+
+# Con un solo request body, para que la subclase 'Config' de person funcione, swagger no funciona
+# @app.put("/person/{person_id}")
+# def update_person(
+#   person_id: int = Path(
+#     ...,
+#     title="Person ID",
+#     description="This is the person ID",
+#     gt=0
+#     ),
+#   person: Person = Body(...)
+# ):
+#   return person;
